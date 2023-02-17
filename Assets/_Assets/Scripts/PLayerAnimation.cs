@@ -6,6 +6,7 @@ using UnityEngine;
 public class PLayerAnimation : MonoBehaviour
 {
     private const string IS_Walking = "IsWalking";
+
     private PlayerMovement _player;
     private Animator _animator;
 
