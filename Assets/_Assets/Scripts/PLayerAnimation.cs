@@ -19,6 +19,7 @@ public class PLayerAnimation : MonoBehaviour
     private void Update()
     {
         _animator.SetBool(IS_Walking,_player.IsWalking());       
+        
     }
 
 

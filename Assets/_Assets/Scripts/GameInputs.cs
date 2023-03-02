@@ -25,7 +25,7 @@ public class GameInputs : MonoBehaviour
     {
         Vector2 Dir = playerController.Player.Move.ReadValue<Vector2>();
         Vector3 movDir = new Vector3 (Dir.x, 0f, Dir.y);
-        
+              
        return movDir = movDir.normalized;
     }
 }
