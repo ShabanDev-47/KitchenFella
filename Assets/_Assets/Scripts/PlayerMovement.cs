@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour,IKitchenObjectParent
 {
     public static PlayerMovement Instance { get; private set; }
     public event EventHandler<OnSelectedCounterChangedArgs> OnSelectedCounterChanged;
@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameInputs gameInputs;
     [SerializeField] LayerMask layerMask;
     private ClearCounter selectedCounter;
+    private KitchenObject kitchenObjectt;
+    [SerializeField] private Transform kitchenObjectHoldPoint;
 
 
     private float rotSpeed = 10f;
@@ -42,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(selectedCounter != null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
  
     }
@@ -140,5 +142,28 @@ public class PlayerMovement : MonoBehaviour
         this.selectedCounter = selectedCounter;
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedArgs { selectedCounter = selectedCounter });
     }
- 
+    public Transform GetKitchenObjectFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObjectt = kitchenObject;
+    }
+    public KitchenObject GetKitchenObject()
+    {
+        return this.kitchenObjectt;
+    }
+
+    public void ClearKitchenObject()
+    {
+        kitchenObjectt = null;
+    }
+
+    public bool HasKitchenObject()
+    {
+        return kitchenObjectt != null;
+    }
+
 }
