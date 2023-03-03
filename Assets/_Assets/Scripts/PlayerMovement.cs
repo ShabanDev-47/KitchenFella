@@ -10,13 +10,13 @@ public class PlayerMovement : MonoBehaviour,IKitchenObjectParent
     public event EventHandler<OnSelectedCounterChangedArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedArgs : EventArgs
     {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     }
 
     [SerializeField] float movSpeed;
     [SerializeField] GameInputs gameInputs;
     [SerializeField] LayerMask layerMask;
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
     private KitchenObject kitchenObjectt;
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
@@ -71,13 +71,13 @@ public class PlayerMovement : MonoBehaviour,IKitchenObjectParent
           
         float interactionDis = 2f;
         if (Physics.Raycast(transform.position, lastDir, out RaycastHit _rayhit, interactionDis,layerMask)){
-            if(_rayhit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if(_rayhit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
                // clearCounter.Interact();
-                if(clearCounter != selectedCounter)
+                if(baseCounter != selectedCounter)
                 {
-                    selectedCounter = clearCounter;
-                    SetSelectedCounter(clearCounter);
+                    selectedCounter = baseCounter;
+                    SetSelectedCounter(baseCounter);
                     
                 }
             }
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour,IKitchenObjectParent
             selectedCounter = null;
             SetSelectedCounter(null);
         }
-        Debug.Log(selectedCounter);
+        
 
     }
 
@@ -137,10 +137,10 @@ public class PlayerMovement : MonoBehaviour,IKitchenObjectParent
         }
 
     }
-    private void SetSelectedCounter(ClearCounter selectedCounter)
+    private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
-        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedArgs { selectedCounter = selectedCounter });
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedArgs {selectedCounter =  selectedCounter });
     }
     public Transform GetKitchenObjectFollowTransform()
     {
