@@ -11,6 +11,10 @@ public class BaseCounter : MonoBehaviour,IKitchenObjectParent
     {
         Debug.LogError("This isn't meant to be called from base class");
     }
+    public virtual void InteractAlter(PlayerMovement player)
+    {
+        Debug.LogError("This isn't meant to be called from base class");
+    }
 
 
     public Transform GetKitchenObjectFollowTransform()

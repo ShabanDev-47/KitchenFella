@@ -36,8 +36,17 @@ public class PlayerMovement : MonoBehaviour,IKitchenObjectParent
     private void Start()
     {
         gameInputs.OnInteract += GameInputs_OnInteract;
+        gameInputs.OnInteractAlter += GameInputs_OnInteractAlter;
         movSpeed = 4f;
         
+    }
+
+    private void GameInputs_OnInteractAlter(object sender, EventArgs e)
+    {
+        if (selectedCounter != null)
+        {
+            selectedCounter.InteractAlter(this);
+        }
     }
 
     private void GameInputs_OnInteract(object sender, System.EventArgs e)
