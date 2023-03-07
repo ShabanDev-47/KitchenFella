@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797a352590dd5bd49b8012b997e5c649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plateKitchenObject: {fileID: 0}
+  plateKitchenObject: {fileID: 2892830412749576913}
   kitchenObjectSO_GameObjectsList:
   - kitchenObjectsSO: {fileID: 11400000, guid: 419f977107d56d5488e7bf81a215052d, type: 2}
     gameObject: {fileID: 2756937275514167914}
