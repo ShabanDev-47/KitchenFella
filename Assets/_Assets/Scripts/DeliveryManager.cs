@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
-    public static DeliveryManager Instance { get; private set; }
+    public static event EventHandler OnReciepeSpawned;
+    public static event EventHandler OnReciepeCompleted;
+    public static DeliveryManager Instance { get;  private set; }
 
 
     [SerializeField] private RecipeListSO recipeListSOs;
@@ -14,15 +17,27 @@ public class DeliveryManager : MonoBehaviour
     private float spawnTimerMax;
     private int waitingReciepeMax;
 
+    private void Awake()
+    {
+   
+    }
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
         waitingReciepeMax = 4;
         spawnTimerMax = 4f;
-        watingReciepeList = new List<RecipeSO>();    
+        watingReciepeList = new List<RecipeSO>();
+
+
+        //RecipeSO r = recipeListSOs.recipes[UnityEngine.Random.Range(0, recipeListSOs.recipes.Count)];
+        //Debug.Log(r.recipeName);
+        //watingReciepeList.Add(r);
+
+        
 
     }
+
 
     // Update is called once per frame
     void Update()
@@ -33,9 +48,13 @@ public class DeliveryManager : MonoBehaviour
             spawnTimer = 0;
             if(watingReciepeList.Count < waitingReciepeMax)
             {
-                RecipeSO r = recipeListSOs.recipes[Random.Range(0, recipeListSOs.recipes.Count)];
+                RecipeSO r = recipeListSOs.recipes[UnityEngine.Random.Range(0, recipeListSOs.recipes.Count)];
                 Debug.Log(r.recipeName);
                 watingReciepeList.Add(r);
+                if (watingReciepeList.Count >= 0)
+                {
+                    OnReciepeSpawned?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
@@ -60,8 +79,9 @@ public class DeliveryManager : MonoBehaviour
                     {
                         if(plateKitchenObject == recipeKitchenSO)
                         {
-                            Debug.Log("Matches");
+                          //  Debug.Log("Matcs");
                             ingredientFound = true;
+                            
                             break;
                         }
                     }
@@ -70,6 +90,7 @@ public class DeliveryManager : MonoBehaviour
                     if (!ingredientFound)
                     {
                         plateContentMatches = true;
+
                     }
                 }
 
@@ -77,6 +98,8 @@ public class DeliveryManager : MonoBehaviour
                 {
                     Debug.Log("Matches");
                     watingReciepeList.RemoveAt(i);
+                    OnReciepeCompleted?.Invoke(this, EventArgs.Empty);
+                    Debug.Log(waitingReceipeSO);
                     return;
                 }
 
@@ -85,6 +108,16 @@ public class DeliveryManager : MonoBehaviour
             
         }
         Debug.Log("Not Matches");
-       
+
+
     }
+
+    public List<RecipeSO> GetWaitingRecipeSOs()
+    {
+        return watingReciepeList;
+    }
+
+
+
+
 }
