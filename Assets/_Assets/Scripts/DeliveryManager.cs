@@ -7,6 +7,8 @@ public class DeliveryManager : MonoBehaviour
 {
     public static event EventHandler OnReciepeSpawned;
     public static event EventHandler OnReciepeCompleted;
+    public static event EventHandler OnReciepeSuccess;
+    public static event EventHandler OnReciepeFailure;
     public static DeliveryManager Instance { get;  private set; }
 
 
@@ -16,6 +18,7 @@ public class DeliveryManager : MonoBehaviour
     private float spawnTimer;
     private float spawnTimerMax;
     private int waitingReciepeMax;
+    public int recipesCompleted;
 
     private void Awake()
     {
@@ -24,7 +27,12 @@ public class DeliveryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this;
+        recipesCompleted = 0;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+       
         waitingReciepeMax = 4;
         spawnTimerMax = 4f;
         watingReciepeList = new List<RecipeSO>();
@@ -99,7 +107,9 @@ public class DeliveryManager : MonoBehaviour
                     Debug.Log("Matches");
                     watingReciepeList.RemoveAt(i);
                     OnReciepeCompleted?.Invoke(this, EventArgs.Empty);
+                    OnReciepeSuccess?.Invoke(this, EventArgs.Empty);
                     Debug.Log(waitingReceipeSO);
+                    recipesCompleted++;
                     return;
                 }
 
@@ -108,6 +118,7 @@ public class DeliveryManager : MonoBehaviour
             
         }
         Debug.Log("Not Matches");
+        OnReciepeFailure?.Invoke(this, EventArgs.Empty);
 
 
     }
@@ -117,6 +128,10 @@ public class DeliveryManager : MonoBehaviour
         return watingReciepeList;
     }
 
+    public int GetRecipesCompleted()
+    {
+        return recipesCompleted;
+    }
 
 
 

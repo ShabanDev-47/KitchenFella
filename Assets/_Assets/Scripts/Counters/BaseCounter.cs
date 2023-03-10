@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class BaseCounter : MonoBehaviour,IKitchenObjectParent
@@ -7,6 +8,8 @@ public class BaseCounter : MonoBehaviour,IKitchenObjectParent
     [SerializeField] private Transform topCounterPoint;
     //[SerializeField] private ClearCounter secondClearCounter;
     private KitchenObject kitchenObjectt;
+
+    public static event EventHandler OnObjectDrop;
     public virtual void Interact(PlayerMovement player)
     {
         Debug.LogError("This isn't meant to be called from base class");
@@ -25,6 +28,11 @@ public class BaseCounter : MonoBehaviour,IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObjectt = kitchenObject;
+
+        if(kitchenObject != null)
+        {
+            OnObjectDrop.Invoke(this, EventArgs.Empty);
+        }
     }
     public KitchenObject GetKitchenObject()
     {

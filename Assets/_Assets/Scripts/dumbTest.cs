@@ -15,7 +15,7 @@ public class dumbTest : MonoBehaviour
         DeliveryManager.OnReciepeSpawned += OnReciepeSpawnedd;
         DeliveryManager.OnReciepeSpawned += OnReciepeCompleted;
 
-        //DeliveryManager.Instance.OnReciepeCompleted += Instance_OnReciepeCompleted;
+        //DeliveryManager.Instance.OnReciepeCompleted+= Instance_OnReciepeCompleted;
     }
 
     private void OnReciepeSpawnedd(object sender, EventArgs e)

@@ -17,8 +17,8 @@ public class DeliveryManagerUI : MonoBehaviour
     {
         UpdateVisual();
 
-        DeliveryManager.OnReciepeSpawned += Instance_OnReciepeSpawned;
-        DeliveryManager.OnReciepeCompleted += Instance_OnReciepeCompleted;
+      //  DeliveryManager.OnReciepeSpawned += Instance_OnReciepeSpawned;
+        //DeliveryManager.OnReciepeCompleted += Instance_OnReciepeCompleted;
 
 
     }
